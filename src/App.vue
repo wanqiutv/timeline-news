@@ -1,29 +1,75 @@
 <template>
   <div id="app">
-    <div class="timeline-block">
-      <div class="timeline-img">
-        <div class="round">
-        </div>
-      </div>
-      <div class="timeline-content right">
-        <div class="timeline-media-section">
-          <img src="http://code2beer.com/timeline/demo/images/img-02.jpg" />
-        </div>
-        <div class="timeline-text-section">
-          <div class="timeline-text">
-            <span class="day-time">9:00 AM</span>
-            <h2>First Responsive Timeline</h2>
-            <p>Modern design and clean code</p>
+    <template v-if="events.length > 0">
+      <template v-for=" (event, index) in events ">
+        <template v-if="index % 2 == 0">
+          <div class="timeline-block">
+            <div class="timeline-img">
+              <div class="round">
+              </div>
+            </div>
+            <div class="timeline-content left">
+              <div class="timeline-media-section">
+                <img src="http://code2beer.com/timeline/demo/images/img-02.jpg" />
+              </div>
+              <div class="timeline-text-section">
+                <div class="timeline-text">
+                  <span class="day-time">9:00 AM</span>
+                  <h2>First Responsive Timeline</h2>
+                  <p>Modern design and clean code</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </template>
+        <template v-else>
+          <div class="timeline-block">
+            <div class="timeline-img">
+              <div class="round">
+              </div>
+            </div>
+            <div class="timeline-content right">
+              <div class="timeline-media-section">
+                <img src="http://code2beer.com/timeline/demo/images/img-02.jpg" />
+              </div>
+              <div class="timeline-text-section">
+                <div class="timeline-text">
+                  <span class="day-time">9:00 AM</span>
+                  <h2>First Responsive Timeline</h2>
+                  <p>Modern design and clean code</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </template>
+    </template>
+    <mugen-scroll :handler="loadEvents" :should-handle="true">
+      <div>loading</div>
+    </mugen-scroll>
+  
   </div>
 </template>
-
 <script>
+import mugenScroll from 'vue-mugen-scroll'
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    loadEvents () {
+      for (let i = 0; i < 10; i++) {
+        let event = {}
+        this.events.push(event)
+      }
+    }
+  },
+  data () {
+    return {
+      events: []
+    }
+  },
+  components: {
+    mugenScroll
+  }
 }
 </script>
 
@@ -62,24 +108,6 @@ span {
   background-color: white;
 }
 
-.timeline-content.left {
-  float: left;
-}
-
-.timeline-content.right {
-  float: right;
-}
-
-.timeline-content.left .timeline-text-section .timeline-text {
-  padding-right: 100px;
-  text-align: right;
-}
-
-.timeline-content.right .timeline-text-section .timeline-text {
-  padding-left: 100px;
-  text-align: left;
-}
-
 .timeline-media-section {
   width: 100%;
 }
@@ -88,17 +116,11 @@ span {
   position: relative;
 }
 
-.timeline-content.left .timeline-text-section .day-time {
-  position: absolute;
+.timeline-content .timeline-text-section .day-time {
   top: 0;
   right: 0;
 }
 
-.timeline-content.right .timeline-text-section .day-time {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
 
 
 .timeline-block {
@@ -120,6 +142,7 @@ span {
   position: absolute;
   height: 100%;
   top: 0;
+  left: 0;
   margin-left: 17px;
 }
 
@@ -132,6 +155,10 @@ span {
   background: black;
 }
 
+.timelien-content {
+  float: left;
+}
+
 @media only screen and (min-width: 679px) {
   .timeline-img {
     left: 50% !important;
@@ -139,6 +166,33 @@ span {
 
   .timeline-block::before {
     left: 50% !important;
+  }
+
+  .timeline-content.left .timeline-text-section .timeline-text {
+    padding-right: 100px;
+    text-align: right;
+  }
+
+  .timeline-content.right .timeline-text-section .timeline-text {
+    padding-left: 100px;
+    text-align: left;
+  }
+  .timeline-content.left .timeline-text-section .day-time {
+    right: 0;
+  }
+
+  .timeline-content.right .timeline-text-section .day-time {
+    left: 0;
+  }
+  .timeline-content.left {
+    float: left;
+  }
+
+  .timeline-content.right {
+    float: right;
+  }
+  .timeline-content .timeline-text-section .day-time {
+    position: absolute;
   }
 }
 </style>
